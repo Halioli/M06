@@ -4,7 +4,9 @@
 #include <array>
 
 std::string* textures;
-std::string* levels;
+std::string* level_title;
+std::string* level_anchura;
+std::string* level_altura;
 std::string title;
 int textures_num = 0;
 int levels_num = 0;
@@ -32,9 +34,30 @@ int loadTextures(std::ifstream& file, int num)
 int loadLevels(std::ifstream& file, int num)
 {
 	std::string word;
-	levels = new std::string[num + 1];
+	level_title = new std::string[num];
+	level_anchura = new std::string[num];
+	level_altura = new std::string[num];
 
+	int counter = 0;
+	while (counter < num) {
+		std::getline(file, word, ';');
+		std::getline(file, word, ';');
 
+		std::getline(file, word, ';');
+		level_title[counter] = word;
+		std::cout << word << '\n';
+
+		std::getline(file, word, ';');
+		level_altura[counter] = word;
+		std::cout << word << '\n';
+
+		std::getline(file, word, ';');
+		level_altura[counter] = word;
+		std::cout << word << '\n';
+
+		std::getline(file, word, '\n');
+		counter++;
+	}
 
 	return 0;
 }
