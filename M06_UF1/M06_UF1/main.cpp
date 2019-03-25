@@ -1,3 +1,4 @@
+#include "raylib.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -10,6 +11,7 @@ std::string* level_altura;
 std::string title;
 int textures_num = 0;
 int levels_num = 0;
+int tiles_num = 0;
 
 int loadTextures(std::ifstream& file, int num)
 {
@@ -62,6 +64,30 @@ int loadLevels(std::ifstream& file, int num)
 	return 0;
 }
 
+int generateLevel(std::ifstream& file)
+{
+	std::string word;
+	std::getline(file, word, ';');
+
+	if (word.compare("BACKGROUND") == 0) {
+		std::getline(file, word, ';');
+		tiles_num = std::stoi(word);
+		std::getline(file, word, '\n');
+	}
+	else if (word.compare("FOREGROUND") == 0) {
+		std::getline(file, word, ';');
+		tiles_num = std::stoi(word);
+		std::getline(file, word, '\n');
+	}
+	else if (word.compare("COLLISION") == 0) {
+		std::getline(file, word, ';');
+		tiles_num = std::stoi(word);
+		std::getline(file, word, '\n');
+	}
+
+	return 0;
+}
+
 int main(int argc, char * argv[])
 {
 	std::ifstream game_conf("../M06_UF1/game.csv");
@@ -95,6 +121,7 @@ int main(int argc, char * argv[])
 			std::getline(game_conf, word, '\n');
 
 			loadLevels(game_conf, levels_num);
+			//generateLevel(game_conf);
 		}
 	}
 	
